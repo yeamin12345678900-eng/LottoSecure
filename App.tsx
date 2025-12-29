@@ -1,21 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
-import Header from './components/Header';
-import Dashboard from './views/Dashboard';
-import Wallet from './views/Wallet';
-import PurchaseTicket from './views/PurchaseTicket';
-import MyTickets from './views/MyTickets';
-import Results from './views/Results';
-import Settings from './views/Settings';
-import Admin from './views/Admin';
-import Profile from './views/Profile';
-import HelpCenter from './views/HelpCenter';
-import Promotions from './views/Promotions';
-import Terms from './views/Terms';
-import Privacy from './views/Privacy';
-import FairPlay from './views/FairPlay';
-import Login from './views/Login';
+import Header from './components/Header.tsx';
+import Dashboard from './views/Dashboard.tsx';
+import Wallet from './views/Wallet.tsx';
+import PurchaseTicket from './views/PurchaseTicket.tsx';
+import MyTickets from './views/MyTickets.tsx';
+import Results from './views/Results.tsx';
+import Settings from './views/Settings.tsx';
+import Admin from './views/Admin.tsx';
+import Profile from './views/Profile.tsx';
+import HelpCenter from './views/HelpCenter.tsx';
+import Promotions from './views/Promotions.tsx';
+import Terms from './views/Terms.tsx';
+import Privacy from './views/Privacy.tsx';
+import FairPlay from './views/FairPlay.tsx';
+import Login from './views/Login.tsx';
 
 const BottomNav: React.FC = () => {
   const location = useLocation();

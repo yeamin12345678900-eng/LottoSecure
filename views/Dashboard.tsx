@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MOCK_LOTTERIES } from '../constants';
-import LotteryCard from '../components/LotteryCard';
-import RightSidebar from '../components/RightSidebar';
+import { MOCK_LOTTERIES } from '../constants.tsx';
+import LotteryCard from '../components/LotteryCard.tsx';
+import RightSidebar from '../components/RightSidebar.tsx';
 
 const Dashboard: React.FC = () => {
   const handleBuyTicket = (id: string) => {
