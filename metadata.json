@@ -1,0 +1,7 @@
+{
+  "name": "LottoSecure",
+  "description": "A high-security, transparent lottery platform with AI-powered luck insights and real-time result tracking.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
