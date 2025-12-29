@@ -38,7 +38,6 @@ export const MOCK_LOTTERIES: Lottery[] = [
 export const NAV_ITEMS = [
   { label: 'Dashboard', icon: 'dashboard', path: '/' },
   { label: 'My Tickets', icon: 'confirmation_number', path: '/tickets' },
-  { label: 'AI Luck Assistant', icon: 'auto_awesome', path: '/ai' },
   { label: 'Promotions', icon: 'redeem', path: '/promotions' },
   { label: 'Draw History', icon: 'history', path: '/history' },
   { label: 'Profile', icon: 'person', path: '/profile' },

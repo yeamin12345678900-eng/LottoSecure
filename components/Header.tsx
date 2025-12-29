@@ -12,7 +12,6 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
   
   const navItems = [
     { label: 'Home', path: '/', icon: 'home' },
-    { label: 'AI Assistant', path: '/ai', icon: 'auto_awesome' },
     { label: 'Promos', path: '/promotions', icon: 'redeem' },
     { label: 'Wallet', path: '/wallet', icon: 'account_balance_wallet' },
     { label: 'Tickets', path: '/tickets', icon: 'confirmation_number' },
@@ -22,16 +21,16 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-green-900/50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-green-900/50 bg-white dark:bg-[#102210]">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center gap-4">
             {/* Mobile Menu Toggle */}
             <button 
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2 text-gray-400 hover:text-primary"
+              className="md:hidden p-2 text-gray-400 hover:text-primary transition-colors"
             >
-              <span className="material-symbols-outlined">menu</span>
+              <span className="material-symbols-outlined text-2xl">menu</span>
             </button>
 
             <Link to="/" className="flex items-center gap-2 md:gap-4">
@@ -83,8 +82,8 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
       {/* Mobile Drawer Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[60] md:hidden">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
-          <div className="absolute left-0 top-0 bottom-0 w-72 bg-background-dark border-r border-white/5 p-6 animate-in slide-in-from-left duration-300">
+          <div className="absolute inset-0 bg-black/80" onClick={() => setIsMobileMenuOpen(false)}></div>
+          <div className="absolute left-0 top-0 bottom-0 w-72 bg-[#0d1b0d] border-r border-white/10 p-6 animate-in slide-in-from-left duration-300 shadow-2xl">
             <div className="flex justify-between items-center mb-10">
               <div className="flex items-center gap-3">
                 <div className="size-8 text-primary">
@@ -94,31 +93,38 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
                 </div>
                 <span className="font-black text-white uppercase tracking-widest text-sm">LottoSecure</span>
               </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500">
-                <span className="material-symbols-outlined">close</span>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+                <span className="material-symbols-outlined text-2xl">close</span>
               </button>
             </div>
-            <nav className="space-y-1">
+            
+            <nav className="space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center gap-4 p-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-                    location.pathname === item.path ? 'bg-primary text-black' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                  className={`flex items-center gap-4 p-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all ${
+                    location.pathname === item.path 
+                      ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(19,236,19,0.1)]' 
+                      : 'text-gray-400 hover:bg-white/5 hover:text-white border border-transparent'
                   }`}
                 >
-                  <span className="material-symbols-outlined">{item.icon}</span>
+                  <span className={`material-symbols-outlined text-xl ${location.pathname === item.path ? 'fill-1' : ''}`}>{item.icon}</span>
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <div className="absolute bottom-6 left-6 right-6">
+
+            <div className="absolute bottom-10 left-6 right-6">
               <button 
-                onClick={onLogout}
-                className="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-red-500/10 text-red-500 text-xs font-black uppercase tracking-widest border border-red-500/20"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onLogout();
+                }}
+                className="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-500/10 text-red-500 text-[11px] font-black uppercase tracking-widest border border-red-500/20 hover:bg-red-500 hover:text-white transition-all"
               >
-                <span className="material-symbols-outlined">logout</span>
+                <span className="material-symbols-outlined text-lg">logout</span>
                 Logout Session
               </button>
             </div>

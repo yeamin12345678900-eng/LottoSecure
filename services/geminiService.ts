@@ -2,10 +2,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PredictionResult } from "../types";
 
-const API_KEY = process.env.API_KEY || "";
-
+// Predict lucky numbers based on a user-provided vibe string
 export const getLuckyNumbers = async (vibe: string): Promise<PredictionResult> => {
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
+  // Always use a named parameter for apiKey and access it directly from process.env
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
@@ -34,6 +34,7 @@ export const getLuckyNumbers = async (vibe: string): Promise<PredictionResult> =
     }
   });
 
-  const jsonStr = response.text.trim();
+  // Access the generated text content via the .text property
+  const jsonStr = response.text?.trim() || "{}";
   return JSON.parse(jsonStr) as PredictionResult;
 };

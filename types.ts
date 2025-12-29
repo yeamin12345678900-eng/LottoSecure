@@ -26,6 +26,9 @@ export interface User {
   name: string;
 }
 
+/**
+ * Interface representing the result of an AI luck prediction.
+ */
 export interface PredictionResult {
   luckyNumbers: number[];
   reasoning: string;

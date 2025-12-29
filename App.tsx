@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Dashboard from './views/Dashboard';
-import AILuckAssistant from './views/AILuckAssistant';
 import Wallet from './views/Wallet';
 import PurchaseTicket from './views/PurchaseTicket';
 import MyTickets from './views/MyTickets';
@@ -22,24 +21,24 @@ const BottomNav: React.FC = () => {
   const location = useLocation();
   const menuItems = [
     { label: 'Home', path: '/', icon: 'home' },
-    { label: 'Play', path: '/history', icon: 'casino' },
-    { label: 'AI', path: '/ai', icon: 'auto_awesome' },
+    { label: 'History', path: '/history', icon: 'casino' },
     { label: 'Tickets', path: '/tickets', icon: 'confirmation_number' },
     { label: 'Wallet', path: '/wallet', icon: 'account_balance_wallet' },
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-lg border-t border-white/5 px-6 py-3 flex justify-between items-center pb-safe-offset-4">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#102210] border-t border-white/10 px-6 py-3 flex justify-between items-center pb-safe-offset-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
       {menuItems.map((item) => {
         const isActive = location.pathname === item.path;
         return (
           <Link 
             key={item.path} 
             to={item.path}
-            className={`flex flex-col items-center gap-1 transition-all ${isActive ? 'text-primary' : 'text-gray-500'}`}
+            className={`flex flex-col items-center gap-1.5 transition-all duration-300 relative ${isActive ? 'text-primary scale-110' : 'text-gray-500 hover:text-gray-300'}`}
           >
-            <span className={`material-symbols-outlined ${isActive ? 'fill-1' : ''}`}>{item.icon}</span>
-            <span className="text-[10px] font-black uppercase tracking-tighter">{item.label}</span>
+            <span className={`material-symbols-outlined text-2xl ${isActive ? 'fill-1' : ''}`}>{item.icon}</span>
+            <span className={`text-[9px] font-black uppercase tracking-wider ${isActive ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
+            {isActive && <span className="absolute -top-3 w-1 h-1 bg-primary rounded-full shadow-[0_0_8px_#13ec13]"></span>}
           </Link>
         );
       })}
@@ -79,7 +78,6 @@ const App: React.FC = () => {
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 pb-24 md:pb-12">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/ai" element={<AILuckAssistant />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/purchase/:id" element={<PurchaseTicket />} />
             <Route path="/tickets" element={<MyTickets />} />
