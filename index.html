@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LottoSecure - Next Gen Lottery</title>
+    <title>LottoSecure - Next Gen High-Security Lottery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.material.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@100;400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
-        // Shim for process.env
         window.process = { env: { API_KEY: "" } };
         
         tailwind.config = {
@@ -19,16 +18,26 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#13ec13",
-                        "background-light": "#f6f8f6",
-                        "background-dark": "#102210",
-                        "card-dark": "#162e16",
+                        "primary": "#00ff41",
+                        "secondary": "#00d4ff",
+                        "background-dark": "#050a05",
+                        "card-dark": "#0c140c",
+                        "accent": "#ff00ff",
                     },
                     fontFamily: {
-                        "display": ["Be Vietnam Pro", "sans-serif"],
-                        "body": ["Noto Sans", "sans-serif"],
+                        "display": ["Outfit", "sans-serif"],
+                        "body": ["Space Grotesk", "sans-serif"],
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px #00ff41' },
+                            '100%': { boxShadow: '0 0 20px #00ff41' },
+                        }
+                    }
                 },
             },
         }
@@ -41,21 +50,37 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background-color: #102210;
+            background-color: #050a05;
+            color: #ffffff;
         }
-        ::-webkit-scrollbar {
-            width: 8px;
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #050a05;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
         }
-        ::-webkit-scrollbar-track {
-            background: #051005;
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #00ff41;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #13ec13;
-            border-radius: 4px;
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #10c910;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050a05; }
+        ::-webkit-scrollbar-thumb { background: #00ff41; border-radius: 10px; }
     </style>
 <script type="importmap">
 {
@@ -65,14 +90,27 @@
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "react-router-dom": "https://esm.sh/react-router-dom@7.1.1?external=react,react-dom",
     "@google/genai": "https://esm.sh/@google/genai@0.21.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-body text-slate-900 dark:text-white antialiased transition-colors duration-200">
+<body class="font-body antialiased">
+    <div id="splash-screen">
+        <div class="loader mb-4"></div>
+        <h2 class="text-primary font-display font-black text-xl tracking-widest animate-pulse">LottoSecure</h2>
+    </div>
     <div id="root"></div>
+    <script type="module">
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 500);
+            }, 800);
+        });
+    </script>
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>

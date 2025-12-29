@@ -1,21 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
-import Header from './components/Header.tsx';
-import Dashboard from './views/Dashboard.tsx';
-import Wallet from './views/Wallet.tsx';
-import PurchaseTicket from './views/PurchaseTicket.tsx';
-import MyTickets from './views/MyTickets.tsx';
-import Results from './views/Results.tsx';
-import Settings from './views/Settings.tsx';
-import Admin from './views/Admin.tsx';
-import Profile from './views/Profile.tsx';
-import HelpCenter from './views/HelpCenter.tsx';
-import Promotions from './views/Promotions.tsx';
-import Terms from './views/Terms.tsx';
-import Privacy from './views/Privacy.tsx';
-import FairPlay from './views/FairPlay.tsx';
-import Login from './views/Login.tsx';
+import Header from './components/Header';
+import Dashboard from './views/Dashboard';
+import Wallet from './views/Wallet';
+import PurchaseTicket from './views/PurchaseTicket';
+import MyTickets from './views/MyTickets';
+import Results from './views/Results';
+import Settings from './views/Settings';
+import Admin from './views/Admin';
+import Profile from './views/Profile';
+import HelpCenter from './views/HelpCenter';
+import Promotions from './views/Promotions';
+import Terms from './views/Terms';
+import Privacy from './views/Privacy';
+import FairPlay from './views/FairPlay';
+import Login from './views/Login';
 
 const BottomNav: React.FC = () => {
   const location = useLocation();
@@ -27,18 +27,18 @@ const BottomNav: React.FC = () => {
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#102210] border-t border-white/10 px-6 py-3 flex justify-between items-center pb-safe-offset-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-2xl border-t border-white/5 px-6 py-4 flex justify-between items-center pb-safe shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
       {menuItems.map((item) => {
         const isActive = location.pathname === item.path;
         return (
           <Link 
             key={item.path} 
             to={item.path}
-            className={`flex flex-col items-center gap-1.5 transition-all duration-300 relative ${isActive ? 'text-primary scale-110' : 'text-gray-500 hover:text-gray-300'}`}
+            className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'text-primary scale-110' : 'text-gray-500 hover:text-gray-300'}`}
           >
             <span className={`material-symbols-outlined text-2xl ${isActive ? 'fill-1' : ''}`}>{item.icon}</span>
-            <span className={`text-[9px] font-black uppercase tracking-wider ${isActive ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
-            {isActive && <span className="absolute -top-3 w-1 h-1 bg-primary rounded-full shadow-[0_0_8px_#13ec13]"></span>}
+            <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${isActive ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
+            {isActive && <span className="absolute -top-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_10px_#00ff41]"></span>}
           </Link>
         );
       })}
@@ -47,13 +47,11 @@ const BottomNav: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
     const authStatus = localStorage.getItem('lottosecure_auth');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
-    }
+    setIsAuthenticated(authStatus === 'true');
   }, []);
 
   const handleLogin = () => {
@@ -66,6 +64,9 @@ const App: React.FC = () => {
     localStorage.removeItem('lottosecure_auth');
   };
 
+  // Prevent flicker on initial load
+  if (isAuthenticated === null) return null;
+
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />;
   }
@@ -75,7 +76,7 @@ const App: React.FC = () => {
       <div className="flex flex-col min-h-screen bg-background-dark text-white font-body selection:bg-primary selection:text-black">
         <Header onLogout={handleLogout} />
         
-        <main className="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 pb-24 md:pb-12">
+        <main className="flex-grow w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 pb-32 md:pb-16">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/wallet" element={<Wallet />} />
@@ -96,27 +97,52 @@ const App: React.FC = () => {
 
         <BottomNav />
 
-        <footer className="hidden md:block border-t border-white/5 bg-background-dark py-16">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-10">
-            <div className="flex items-center gap-4">
-              <div className="size-10 text-primary">
-                <svg className="h-full w-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
-                </svg>
+        <footer className="hidden md:block border-t border-white/5 bg-black/40 py-20">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="size-10 text-primary">
+                    <svg className="h-full w-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+                    </svg>
+                  </div>
+                  <span className="text-2xl font-display font-black tracking-tight">LottoSecure</span>
+                </div>
+                <p className="text-gray-500 max-w-xs text-sm font-medium leading-relaxed">
+                  The world's first truly decentralized high-security lottery platform. Audited. Verified. Proven.
+                </p>
               </div>
-              <span className="text-lg font-black text-gray-400 uppercase tracking-[0.2em] font-display">LotteryWin Platform</span>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-16">
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-white uppercase tracking-widest">Platform</h4>
+                  <nav className="flex flex-col gap-2">
+                    <Link to="/" className="text-sm text-gray-500 hover:text-primary transition-colors">Games</Link>
+                    <Link to="/results" className="text-sm text-gray-500 hover:text-primary transition-colors">Draw History</Link>
+                    <Link to="/fairplay" className="text-sm text-gray-500 hover:text-primary transition-colors">Fairness Audit</Link>
+                  </nav>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-white uppercase tracking-widest">Legal</h4>
+                  <nav className="flex flex-col gap-2">
+                    <Link to="/terms" className="text-sm text-gray-500 hover:text-primary transition-colors">Terms</Link>
+                    <Link to="/privacy" className="text-sm text-gray-500 hover:text-primary transition-colors">Privacy</Link>
+                    <Link to="/help" className="text-sm text-gray-500 hover:text-primary transition-colors">Support</Link>
+                  </nav>
+                </div>
+              </div>
             </div>
-            
-            <nav className="flex flex-wrap justify-center gap-10">
-              <Link to="/terms" className="text-xs font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">Terms</Link>
-              <Link to="/privacy" className="text-xs font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">Privacy</Link>
-              <Link to="/fairplay" className="text-xs font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">Fair Play</Link>
-              <Link to="/help" className="text-xs font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">Support</Link>
-            </nav>
-            
-            <div className="flex flex-col items-center md:items-end gap-2">
-              <p className="text-[10px] text-gray-700 font-black uppercase tracking-[0.3em]">© 2024 LotteryWin INC.</p>
-              <p className="text-[8px] text-gray-800 font-bold uppercase tracking-widest">Global Node Verified • TLS 1.3</p>
+
+            <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+              <p className="text-[10px] text-gray-700 font-black uppercase tracking-[0.4em]">© 2024 LottoSecure Global Protocol INC.</p>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">
+                   <span className="material-symbols-outlined text-[12px] text-primary">verified_user</span>
+                   <span className="text-[8px] font-black text-primary uppercase">Quantum Safe</span>
+                </div>
+                <span className="text-[8px] text-gray-800 font-bold uppercase tracking-widest">Node Verified: 0x44...A2</span>
+              </div>
             </div>
           </div>
         </footer>

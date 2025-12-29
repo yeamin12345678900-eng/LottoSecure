@@ -1,97 +1,94 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MOCK_LOTTERIES } from '../constants.tsx';
-import LotteryCard from '../components/LotteryCard.tsx';
-import RightSidebar from '../components/RightSidebar.tsx';
+import { MOCK_LOTTERIES } from '../constants';
+import LotteryCard from '../components/LotteryCard';
+import RightSidebar from '../components/RightSidebar';
 
 const Dashboard: React.FC = () => {
-  const handleBuyTicket = (id: string) => {
-    // This prop is still needed for LotteryCard but Link is used inside now
-  };
-
   return (
-    <div className="flex flex-col lg:flex-row gap-8 animate-in fade-in duration-700">
-      {/* Main Content (Left) */}
-      <div className="flex-1 min-w-0 space-y-10">
+    <div className="flex flex-col lg:flex-row gap-8 animate-in fade-in duration-1000">
+      <div className="flex-1 min-w-0 space-y-12">
         
-        {/* Hero Section */}
-        <section className="relative overflow-hidden rounded-3xl bg-card-dark border border-green-900/30 shadow-2xl group">
-          <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-primary/10 rounded-full blur-[100px] group-hover:bg-primary/20 transition-all duration-700"></div>
+        {/* Futuristic Hero Section */}
+        <section className="relative overflow-hidden rounded-[2.5rem] bg-card-dark border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <div className="absolute top-0 right-0 -mt-24 -mr-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+          <div className="absolute bottom-0 left-0 -mb-24 -ml-24 w-80 h-80 bg-secondary/10 rounded-full blur-[100px]"></div>
           
-          <div className="flex flex-col md:flex-row">
-            {/* Image Side */}
-            <div className="w-full md:w-2/5 h-64 md:h-auto relative min-h-[320px]">
-              <div 
-                className="absolute inset-0 bg-cover bg-center" 
-                style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBd5U0g5mpES3HmhRWoAeTlmgoxekQdHm0zPdhJc5GEdF3QMBCdoTtkTZo1rZmG7QD722CH35EavVWf5eMxmSrqedMcPdjRCOv6_4dDsuU16Q9R3AA9PAIHWQSe29UJTi5b4PeVIuXaGC-U-UxGkkZm40HPTx-joVNwfftP6OO2Kr0P2BFejO9BWJb1AUss1j4xWh_Rxn8wnOy8hklaTUU-MNvT2BOJn8XMrGhZGJmNuuqO36DdEyiil9-MK8YbSvRden_oaGajn26A')" }}
+          <div className="flex flex-col md:flex-row min-h-[450px]">
+            {/* Visual Side */}
+            <div className="w-full md:w-5/12 relative overflow-hidden h-64 md:h-auto">
+              <img 
+                src="https://images.unsplash.com/photo-1621243804936-775306a8f2e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                alt="Jackpot Visualization"
               />
-              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-card-dark via-card-dark/20 to-transparent opacity-90"></div>
-              <div className="absolute top-6 left-6">
-                <span className="px-4 py-1.5 bg-primary text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-xl shadow-primary/20">
-                  Mega Jackpot
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-card-dark via-card-dark/40 to-transparent"></div>
+              <div className="absolute top-8 left-8">
+                <div className="px-4 py-2 bg-primary/20 backdrop-blur-xl border border-primary/30 rounded-full">
+                  <span className="text-primary text-[10px] font-black uppercase tracking-widest">Global Draw LIVE</span>
+                </div>
               </div>
             </div>
 
-            {/* Content Side */}
-            <div className="flex-1 p-8 md:p-12 flex flex-col justify-center relative z-10">
-              <h2 className="text-xs font-black text-primary mb-2 uppercase tracking-[0.3em]">Global Draw Live</h2>
-              <div className="mb-8">
-                <p className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-none mb-4">
-                  $50,000,000
-                </p>
-                <p className="text-gray-400 text-sm max-w-sm">Verified on-chain. Secure instant payouts directly to your wallet.</p>
-              </div>
+            {/* Text Side */}
+            <div className="flex-1 p-8 md:p-14 flex flex-col justify-center relative z-10">
+              <h2 className="text-primary font-black text-xs uppercase tracking-[0.4em] mb-4">The Ultimate Prize</h2>
+              <h1 className="text-5xl md:text-7xl font-display font-black text-white leading-[0.9] tracking-tighter mb-6">
+                50,000,000 <span className="text-primary text-3xl font-body align-top">$</span>
+              </h1>
+              <p className="text-gray-400 text-lg max-w-md mb-10 leading-relaxed font-light">
+                Securely distributed via on-chain smart contracts. Instant payouts guaranteed.
+              </p>
 
-              {/* Timer */}
-              <div className="flex gap-4 mb-8">
-                {[
-                  { value: '04', label: 'Hours' },
-                  { value: '23', label: 'Mins' },
-                  { value: '12', label: 'Secs', highlight: true }
-                ].map((unit, i) => (
-                  <div key={i} className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-background-dark/80 backdrop-blur-md rounded-2xl border border-green-900/50 flex items-center justify-center mb-1">
-                      <span className={`text-2xl font-black font-mono ${unit.highlight ? 'text-primary' : 'text-white'}`}>
-                        {unit.value}
-                      </span>
-                    </div>
-                    <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">{unit.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <Link to="/purchase/3" className="px-8 py-4 bg-primary hover:bg-green-400 text-black font-black rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center gap-3">
-                  <span className="material-symbols-outlined">confirmation_number</span>
-                  Get Tickets Now
+              <div className="flex flex-wrap gap-6 items-center">
+                <Link to="/purchase/3" className="px-10 py-5 bg-primary hover:bg-white text-black font-black rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,255,65,0.3)] transform hover:-translate-y-1 flex items-center gap-4">
+                  <span className="material-symbols-outlined font-black">token</span>
+                  PLAY NOW
                 </Link>
-                <button className="p-4 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-400 hover:text-white transition-all">
-                  <span className="material-symbols-outlined">info</span>
-                </button>
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="size-10 rounded-full border-2 border-card-dark bg-gray-800 overflow-hidden">
+                      <img src={`https://picsum.photos/40/40?random=${i+100}`} alt="Player" />
+                    </div>
+                  ))}
+                  <div className="size-10 rounded-full bg-white/5 border-2 border-card-dark flex items-center justify-center text-[10px] text-primary font-black">+2k</div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        {/* Categories / Toggles */}
+        <div className="flex items-center gap-4 overflow-x-auto pb-4 no-scrollbar">
+          {['All Games', 'Jackpot', 'Fast Draws', 'Scratch', 'AI Predictions'].map((cat, i) => (
+            <button key={i} className={`px-6 py-3 rounded-2xl whitespace-nowrap text-xs font-black uppercase tracking-widest border transition-all ${i === 0 ? 'bg-primary border-primary text-black' : 'bg-white/5 border-white/5 text-gray-500 hover:text-white hover:border-white/10'}`}>
+              {cat}
+            </button>
+          ))}
+        </div>
+
         {/* Active Grid */}
         <section>
-          <div className="flex items-center justify-between mb-8 px-2">
-            <h3 className="text-2xl font-black text-white tracking-tight">Active Lotteries</h3>
-            <button className="text-primary text-xs font-black uppercase tracking-widest flex items-center gap-1 hover:underline">
-              View All <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
+          <div className="flex items-center justify-between mb-10">
+            <h3 className="text-3xl font-display font-black text-white">Live Opportunities</h3>
+            <div className="flex gap-2">
+              <button className="p-2 rounded-xl bg-white/5 text-gray-500 hover:text-primary transition-colors">
+                <span className="material-symbols-outlined">grid_view</span>
+              </button>
+              <button className="p-2 rounded-xl bg-white/5 text-gray-500 hover:text-primary transition-colors">
+                <span className="material-symbols-outlined">list</span>
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {MOCK_LOTTERIES.map(lottery => (
-              <LotteryCard key={lottery.id} lottery={lottery} onBuy={handleBuyTicket} />
+              <LotteryCard key={lottery.id} lottery={lottery} onBuy={() => {}} />
             ))}
           </div>
         </section>
       </div>
 
-      {/* Sidebar (Right) */}
       <RightSidebar />
     </div>
   );
